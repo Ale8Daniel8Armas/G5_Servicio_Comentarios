@@ -1,0 +1,22 @@
+services: 
+  mysqldb: 
+    image: mysql
+    environment:
+    - MYSQL_ROOT_PASSWORD=rootroot
+    - MYSQL_DATABASE=dbmicroservicio
+    ports:
+      - 4040:3306
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
+  app:
+    build: .
+    depends_on:
+    - mysqldb
+    links:
+    - mysqldb
+    ports:
+    - 7040:7040
+
+
